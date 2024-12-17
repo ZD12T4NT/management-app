@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Form} from "@/components/ui/form"
+import { Form, FormControl} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -13,6 +13,9 @@ import { UserFormValidation } from "@/lib/Validation"
 import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.actions"
 import { FormFieldType } from "./PatientForm"
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
+import { GenderOptions } from "@/constants"
+import { Label } from "../ui/label"
 
 
  
@@ -71,6 +74,40 @@ const RegisterForm = ({ user }: { user: User}) => {
         
         <CustomFormField fieldType={FormFieldType.PHONE_INPUT} control={form.control} name="phone" label="Phone Number" placeholder="(+44)123456789" iconSrc="/assets/icons/email.svg" iconAlt="email" />
           </div>
+
+          <div className="flex flex-col gap-6 xl:flex-grow">
+          <CustomFormField fieldType={FormFieldType.DATE_PICKER} control={form.control} name="birthDate" label="Date of Birth" />
+
+        
+<CustomFormField fieldType={FormFieldType.SKELETON} control={form.control} name="gender" label="Gender" renderSkeleton={(field) => (
+  <FormControl>
+    <RadioGroup className="flex h-11 gap-6 xl:justify-between" onValueChange={field.onChange}
+    defaultValue={field.value}>
+      {GenderOptions.map((option) => (
+        <div key={option} className="radio-group">
+          <RadioGroupItem value={option} id={option} />
+          <Label htmlFor={option} className="cursor-pointer">
+            {option}
+          </Label>
+        </div>
+      ))}
+    </RadioGroup>
+  </FormControl>
+  )} />
+          </div>
+
+          <div className="flex flex-col gap-6 xl:flex-grow">
+            
+            </div>
+
+            <div className="flex flex-col gap-6 xl:flex-grow">
+            
+            </div>
+
+            <div className="flex flex-col gap-6 xl:flex-grow">
+            
+            </div>
+  
 
 
       <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
